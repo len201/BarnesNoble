@@ -1,62 +1,34 @@
-import React, { useEffect } from 'react'
+  
+import React from 'react'
 import { Link } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import { Row, Col } from 'react-bootstrap'
-import Product from '../components/Product'
-import Message from '../components/Message'
-import Loader from '../components/Loader'
-import Paginate from '../components/Paginate'
-import ProductCarousel from '../components/ProductCarousel'
-import Meta from '../components/Meta'
-import { listProducts } from '../actions/productActions'
+import { Card } from 'react-bootstrap'
+import Rating from './Rating'
 
-const HomeScreen = ({ match }) => {
-  const keyword = match.params.keyword
-
-  const pageNumber = match.params.pageNumber || 1
-
-  const dispatch = useDispatch()
-
-  const productList = useSelector((state) => state.productList)
-  const { loading, error, products, page, pages } = productList
-
-  useEffect(() => {
-    dispatch(listProducts(keyword, pageNumber))
-  }, [dispatch, keyword, pageNumber])
-
+const Product = ({ product }) => {
   return (
-    <>
-      <Meta />
-      {!keyword ? (
-        <ProductCarousel />
-      ) : (
-        <Link to='/' className='btn btn-light'>
-          Go Back
+    <Card className='my-3 p-3 rounded'>
+      <Link to={`/product/${product._id}`}>
+        <Card.Img src={product.image} variant='top' />
+      </Link>
+
+      <Card.Body>
+        <Link to={`/product/${product._id}`}>
+          <Card.Title as='div'>
+            <strong>{product.name}</strong>
+          </Card.Title>
         </Link>
-      )}
-      <h1>Latest Products</h1>
-      {loading ? (
-        <Loader />
-      ) : error ? (
-        <Message variant='danger'>{error}</Message>
-      ) : (
-        <>
-          <Row>
-            {products.map((product) => (
-              <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
-                <Product product={product} />
-              </Col>
-            ))}
-          </Row>
-          <Paginate
-            pages={pages}
-            page={page}
-            keyword={keyword ? keyword : ''}
+
+        <Card.Text as='div'>
+          <Rating
+            value={product.rating}
+            text={`${product.numReviews} reviews`}
           />
-        </>
-      )}
-    </>
+        </Card.Text>
+
+        <Card.Text as='h3'>${product.price}</Card.Text>
+      </Card.Body>
+    </Card>
   )
 }
 
-export default HomeScreen
+export default Product
