@@ -5,8 +5,11 @@
   "main": "server.js",
   "type": "module",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "dotenv": "^8.2.0",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "express-async-handler": "^1.1.4",
+    "mongoose": "^5.11.4"
   },
   "devDependencies": {
     "concurrently": "^5.3.0",
@@ -16,16 +19,18 @@
     "start": "node backend/server",
     "server": "nodemon backend/server",
     "client": "npm start --prefix frontend",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "data:import": "node backend/seeder",
+    "data:destroy": "node backend/seeder -d"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/LenaLeona/BarnesNoble.git"
+    "url": "git+https://github.com/len201/BarnesNoble.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/LenaLeona/BarnesNoble/issues"
+    "url": "https://github.com/len201/BarnesNoble/issues"
   },
-  "homepage": "https://github.com/LenaLeona/BarnesNoble#readme"
+  "homepage": "https://github.com/len201/BarnesNoble#readme"
 }
